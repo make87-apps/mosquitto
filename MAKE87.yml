@@ -93,5 +93,3 @@ config:
       type: boolean
       description: Show connection/disconnection logs.
       default: true
-
-  additionalProperties: false
