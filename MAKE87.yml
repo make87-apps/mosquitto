@@ -11,7 +11,7 @@ interfaces:
     servers:
       - name: mosquitto-secure
         spec:
-          string: mqtt:5.0
+          string: MQTT/5.0
 container_config: {}
 config:
   type: object
