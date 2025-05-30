@@ -12,82 +12,9 @@ interfaces:
       - name: mosquitto-secure
         spec:
           string: MQTT/5.0
-container_config: {}
-config:
-  type: object
-  properties:
-    persistence:
-      type: boolean
-      description: Enable persistent storage of messages.
-      default: false
-    persistence_file:
-      type: string
-      description: The filename used for the persistence database.
-      default: mosquitto.db
-    persistence_location:
-      type: string
-      description: Directory where persistence file is stored.
-      default: ""
-    log_dest:
-      type: array
-      items:
-        type: string
-        enum:
-          - stdout
-          - stderr
-          - topic
-          - syslog
-          - file
-      description: Log destinations.
-      default:
-        - stderr
-    log_type:
-      type: array
-      items:
-        type: string
-        enum:
-          - information
-          - notice
-          - warning
-          - error
-          - debug
-          - subscribe
-          - unsubscribe
-          - websockets
-      description: Types of logs to enable.
-      default:
-        - error
-        - warning
-        - notice
-        - information
-    allow_anonymous:
-      type: boolean
-      description: Allow anonymous clients to connect.
-      default: true
-    password_file:
-      type: string
-      description: File containing usernames and passwords.
-      default: ""
-    acl_file:
-      type: string
-      description: Path to access control list file.
-      default: ""
-    max_inflight_messages:
-      type: integer
-      description: Max QoS 1/2 in-flight messages per client.
-      default: 20
-    max_queued_messages:
-      type: integer
-      description: Maximum number of queued messages per client.
-      default: 100
-    message_size_limit:
-      type: integer
-      description: Maximum payload size (in bytes).
-      default: 0
-    connection_messages:
-      type: boolean
-      description: Show connection/disconnection logs.
-      default: true
+container_config:
+  volumes:
+    - "~/mosquitto:/mosquitto:rw"
 build:
   custom:
     dockerfile: Dockerfile
