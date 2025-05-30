@@ -1,4 +1,5 @@
 FROM eclipse-mosquitto:2.0.21
-COPY mosquitto.conf /mosquitto/config/mosquitto.conf
 
-CMD ["mosquitto", "-c", "/mosquitto/config/mosquitto.conf"]
+COPY mosquitto.conf /etc/mosquitto/make87.conf
+
+CMD ["mosquitto", "-c", "/etc/mosquitto/make87.conf"]
