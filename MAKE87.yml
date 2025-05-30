@@ -1,8 +1,4 @@
 version: 1
-build:
-  custom:
-    dockerfile: Dockerfile
-    platforms: [ linux/amd64, linux/arm64  ]
 interfaces:
   - name: mqtt-server
     protocol: mqtt
@@ -10,12 +6,12 @@ interfaces:
       name: mqtt-server
       protocol: TCP
       target_port: 1883
+      publish_mode: Ingress
+      is_system_interface: false
     servers:
       - name: mosquitto-secure
         spec:
-          string: mqtt:5.0
-
-peripheral_requirements: []
+          string: MQTT/5.0
 container_config: {}
 config:
   type: object
@@ -24,25 +20,27 @@ config:
       type: boolean
       description: Enable persistent storage of messages.
       default: false
-
     persistence_file:
       type: string
       description: The filename used for the persistence database.
-      default: "mosquitto.db"
-
+      default: mosquitto.db
     persistence_location:
       type: string
       description: Directory where persistence file is stored.
       default: ""
-
     log_dest:
       type: array
       items:
         type: string
-        enum: [ "stdout", "stderr", "topic", "syslog", "file" ]
+        enum:
+          - stdout
+          - stderr
+          - topic
+          - syslog
+          - file
       description: Log destinations.
-      default: [ "stderr" ]
-
+      default:
+        - stderr
     log_type:
       type: array
       items:
@@ -57,39 +55,42 @@ config:
           - unsubscribe
           - websockets
       description: Types of logs to enable.
-      default: [ "error", "warning", "notice", "information" ]
-
+      default:
+        - error
+        - warning
+        - notice
+        - information
     allow_anonymous:
       type: boolean
       description: Allow anonymous clients to connect.
       default: true
-
     password_file:
       type: string
       description: File containing usernames and passwords.
       default: ""
-
     acl_file:
       type: string
       description: Path to access control list file.
       default: ""
-
     max_inflight_messages:
       type: integer
       description: Max QoS 1/2 in-flight messages per client.
       default: 20
-
     max_queued_messages:
       type: integer
       description: Maximum number of queued messages per client.
       default: 100
-
     message_size_limit:
       type: integer
       description: Maximum payload size (in bytes).
       default: 0
-
     connection_messages:
       type: boolean
       description: Show connection/disconnection logs.
       default: true
+build:
+  custom:
+    dockerfile: Dockerfile
+    platforms:
+      - linux/amd64
+      - linux/arm64
