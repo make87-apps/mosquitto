@@ -1,3 +1,4 @@
 FROM eclipse-mosquitto:2.0.21
+COPY mosquitto.conf /mosquitto/config/mosquitto.conf
 
-ENTRYPOINT ["/bin/sh", "-c", "mosquitto"]
+CMD ["mosquitto", "-c", "/mosquitto/config/mosquitto.conf"]
