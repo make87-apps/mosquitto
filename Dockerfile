@@ -1,7 +1,5 @@
 FROM eclipse-mosquitto:2.0.21
 
-# copy main.py and set it as entrypoint
-COPY app/main.py /mosquitto/app/main.py
+RUN apk add --no-cache jq
 
-# entrypoint
-ENTRYPOINT ["python3", "/mosquitto/app/main.py"]
+ENTRYPOINT ["/bin/sh", "-c", "echo \"$MAKE87_CONFIG\" | jq -r '.config' > config.json && mosquitto -c config.json"]
